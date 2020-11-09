@@ -1,7 +1,9 @@
 import { GenericObject } from 'moleculer';
 import { Service } from 'typedi';
+import { ObjectID } from 'typeorm';
 import { Any } from 'types';
 
+const mongoose = require('mongoose');
 const lodashFlattenDeep = require('lodash/flattenDeep');
 
 @Service({
@@ -47,5 +49,9 @@ export class Utilities {
      */
     public flattenDeep(array: Any[]): Any[] {
         return lodashFlattenDeep(array);
+    }
+
+    public toObjectId(id: string): ObjectID {
+        return mongoose.Types.ObjectId(id);
     }
 }

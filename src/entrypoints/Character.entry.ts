@@ -1,10 +1,11 @@
 import {
-    AddCharacterController, GetPagedCharactersController, LoadCharacterController
+    AddCharacterController, GetPagedCharactersController, LoadCharacterController, UpdateCharacterController
 } from 'modules/character/controller';
 import { Context, Service as MolecularService } from 'moleculer';
 import {
     AddCharacterRequestIn, AddCharacterValidator, GetPagedCharactersRequestIn,
-     GetPagedCharactersValidator, LoadCharacterRequestIn, LoadCharacterValidator
+    GetPagedCharactersValidator, LoadCharacterRequestIn, LoadCharacterValidator,
+    UpdateCharacterRequestIn, UpdateCharacterValidator
 } from 'requests';
 import Container from 'typedi';
 import { AppError, ResponseMessage } from 'types';
@@ -68,6 +69,25 @@ export default class CharacterEntry extends MolecularService {
             const { id } = ctx.params;
 
             const character = await Container.get(LoadCharacterController).load(id);
+
+            return responseMsg.withData(responseMsg.Success, character);
+        } catch (error) {
+            throw AppError.get(error);
+        }
+    }
+
+    @Action({
+        rest: {
+            method: 'PUT',
+            path: '/update'
+        },
+        params: UpdateCharacterValidator
+    })
+    public async update(ctx: Context<UpdateCharacterRequestIn>): Promise<ResponseMessage> {
+        try {
+            const characterData = ctx.params;
+
+            const character = await Container.get(UpdateCharacterController).update(characterData);
 
             return responseMsg.withData(responseMsg.Success, character);
         } catch (error) {

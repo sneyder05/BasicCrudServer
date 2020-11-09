@@ -1,15 +1,15 @@
 import { Character } from 'domain/models';
 import { AddCharacterRequestIn } from 'requests';
 import { Inject, Service } from 'typedi';
-import { AddCharacterRepository } from '../repository';
+import { SaveCharacterRepository } from '../repository';
 
 @Service()
 export class AddCharacterController {
     @Inject()
-    private addCharacterRepository!: AddCharacterRepository;
+    private addCharacterRepository!: SaveCharacterRepository;
 
     public async add(data: AddCharacterRequestIn): Promise<Character> {
-        return this.addCharacterRepository.add(this.tranformDataToCharacter(data));
+        return this.addCharacterRepository.save(this.tranformDataToCharacter(data));
     }
 
     private tranformDataToCharacter(data: AddCharacterRequestIn): Character {

@@ -6,11 +6,11 @@ import { MongoDuplicateKeyIndex, MongoErrorCode } from 'types';
 import { MongoErrorParser } from 'utils/MongoErrorParser';
 
 @Service()
-export class AddCharacterRepository {
+export class SaveCharacterRepository {
     @InjectRepository(Character)
     private characterRepository!: CharacterRepository;
 
-    public async add(character: Character): Promise<Character> {
+    public async save(character: Character): Promise<Character> {
         try {
             return await this.characterRepository.save(character);
         } catch (error) {
