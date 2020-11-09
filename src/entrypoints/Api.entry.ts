@@ -1,4 +1,4 @@
-import { Service as MolecularService, GenericObject, Errors, Context } from 'moleculer';
+import { Service as MolecularService, Errors } from 'moleculer';
 import { ServerResponse, IncomingMessage } from 'http';
 import config from 'config';
 

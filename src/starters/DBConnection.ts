@@ -10,7 +10,7 @@ const DBConnectionStarter: MongoConnectionOptions = {
     database: config.mongo.db,
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    synchronize: false,
+    synchronize: true,
     entities: [ __dirname + '/../domain/models/*.ts' ]
 };
 

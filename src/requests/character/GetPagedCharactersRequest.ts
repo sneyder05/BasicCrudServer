@@ -9,7 +9,7 @@ const GetPagedCharactersValidator = {
     name: {
         type: 'string',
         optional: true,
-        min: 3,
+        empty: true,
         lowercase: true,
         trim: true,
         default: ''
@@ -17,7 +17,7 @@ const GetPagedCharactersValidator = {
     originPlanet: {
         type: 'string',
         optional: true,
-        min: 2,
+        empty: true,
         lowercase: true,
         trim: true,
         default: ''
