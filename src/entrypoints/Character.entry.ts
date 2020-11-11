@@ -1,5 +1,6 @@
 import {
-    AddCharacterController, GetPagedCharactersController, LoadCharacterController, UpdateCharacterController
+    AddCharacterController, GetPagedCharactersController, LoadCharacterController,
+    RemoveCharacterController, UpdateCharacterController
 } from 'modules/character/controller';
 import { Context, Service as MolecularService } from 'moleculer';
 import {
@@ -7,6 +8,7 @@ import {
     GetPagedCharactersValidator, LoadCharacterRequestIn, LoadCharacterValidator,
     UpdateCharacterRequestIn, UpdateCharacterValidator
 } from 'requests';
+import { RemoveCharacterRequestIn, RemoveCharacterValidator } from 'requests/character/RemoveCharacterRequest';
 import Container from 'typedi';
 import { AppError, ResponseMessage } from 'types';
 import { ResponseMsg } from 'utils';
@@ -90,6 +92,25 @@ export default class CharacterEntry extends MolecularService {
             const character = await Container.get(UpdateCharacterController).update(characterData);
 
             return responseMsg.withData(responseMsg.Success, character);
+        } catch (error) {
+            throw AppError.get(error);
+        }
+    }
+
+    @Action({
+        rest: {
+            method: 'DELETE',
+            path: '/remove/:id'
+        },
+        params: RemoveCharacterValidator
+    })
+    public async remove(ctx: Context<RemoveCharacterRequestIn>): Promise<ResponseMessage> {
+        try {
+            const { id } = ctx.params;
+
+            await Container.get(RemoveCharacterController).remove(id);
+
+            return responseMsg.Success;
         } catch (error) {
             throw AppError.get(error);
         }

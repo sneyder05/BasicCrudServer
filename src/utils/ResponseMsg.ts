@@ -8,10 +8,11 @@ export class ResponseMsg {
     };
 
     public withData(msg: ResponseMessage, data: Any): ResponseMessage {
+        const response = { ...msg };
         if (data) {
-            msg.data = data;
+            response.data = data;
         }
 
-        return msg;
+        return response;
     }
 }
