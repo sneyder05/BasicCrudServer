@@ -19,7 +19,7 @@ export class GetPagedCharactersRepository {
         }
 
         if (originPlanet) {
-            filters.push({ uri: { '$regex': originPlanet, '$options': 'i' } });
+            filters.push({ originPlanet: { '$regex': originPlanet, '$options': 'i' } });
         }
 
         if (filters.length) {

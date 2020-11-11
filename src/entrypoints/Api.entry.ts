@@ -54,12 +54,13 @@ export default class ApiEntry extends MolecularService {
         }
 
         const error = {
+            origin: config.app.error.origin,
             success: false,
             name: err.name,
             message: err.message,
             code: err.code,
             type: err.type,
-            data: process.env.TARGET !== 'production' ? err.data : []
+            data: process.env.TARGET !== 'production' ? err.data : null
         };
 
         res.setHeader('Content-Type', 'application/json');

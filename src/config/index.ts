@@ -11,7 +11,10 @@ if (envFound.error) {
 export default {
     app: {
         target: process.env.TARGET || 'development',
-        port: process.env.PORT || 3000
+        port: process.env.PORT || 3000,
+        error: {
+            origin: process.env.ERROR_ORIGIN || 'app'
+        }
     },
     cacher: {
         isEnable: process.env.CACHER_ENABLE === 'true',
