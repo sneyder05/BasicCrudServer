@@ -1,0 +1,51 @@
+version: '3'
+
+volumes:
+  mongo-db-data:
+
+services:
+  #MongoDB
+  mongodb:
+    image: mongo:4.0
+    restart: on-failure
+    env_file:
+      - ./Server/docker.mongo.env
+    expose:
+      - 27017
+    volumes:
+      - mongo-db-data:/data/db
+      - ./Server/mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+    logging:
+      options:
+        max-size: "1024k"
+        max-file: "10"
+  #AppServer
+  app-server:
+    image: amon/app-server
+    hostname: app-server
+    restart: on-failure
+    env_file:
+      - ./Server/docker.app.env
+    build: ./Server
+    ports:
+      - 3500:3000
+    depends_on:
+      - mongodb
+    logging:
+      options:
+        max-size: "1024k"
+        max-file: "10"
+  #AppFrontend
+  app-frontend:
+    image: amon/app-frontend
+    hostname: app-frontend
+    restart: on-failure
+    build: ./Frontend
+    ports:
+      - 4500:4200
+    depends_on:
+      - app-server
+    logging:
+      options:
+        max-size: "1024k"
+        max-file: "10"
