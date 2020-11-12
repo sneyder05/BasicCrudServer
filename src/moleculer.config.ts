@@ -17,7 +17,7 @@ const brokerConfig: BrokerOptions = {
     serializer: 'JSON',
     requestTimeout: 10 * 1000,
     async created() {
-        createConnection(DBConnectionStarter);
+        await createConnection(DBConnectionStarter);
     }
 };
 
